@@ -1,0 +1,22 @@
+{
+  "name": "ts-code-of-advent",
+  "version": "1.0.0",
+  "description": "Test project to discover typescript and play with Code of advent",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tomaspavlatka/ts-code-of-advent.git"
+  },
+  "author": "Tomas Pavlatka <tomas@pavlatka.cz>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tomaspavlatka/ts-code-of-advent/issues"
+  },
+  "homepage": "https://github.com/tomaspavlatka/ts-code-of-advent#readme",
+  "devDependencies": {
+    "typescript": "^5.2.2"
+  }
+}
