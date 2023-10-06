@@ -1,9 +1,11 @@
 {
-  "name": "ts-code-of-advent",
+  "name": "ts-code-of-advent/hello-world",
   "version": "1.0.0",
   "description": "Test project to discover typescript and play with Code of advent",
-  "main": "index.js",
+  "main": "dist/app.js",
   "scripts": {
+    "start" : "tsc && node dist/app.js",
+    "lint" : "eslint . --ext .ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
