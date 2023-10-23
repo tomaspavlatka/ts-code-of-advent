@@ -1,8 +1,5 @@
 {
-  "devDependencies": {
-    "@types/node": "^20.8.4"
-  },
-  "dependencies": {
-    "typescript": "^5.2.2"
-  }
+    "name": "Typescript code of advent",
+    "version": "0.0.9",
+    "main": "src/index.ts"
 }
