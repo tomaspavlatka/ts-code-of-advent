@@ -1,22 +1,22 @@
 export const p2 = (input: string): number => {
     let sum = 0;
     input.split("\n").forEach( line => {
-        sum += parseNumber(line);
+        sum += parseLineNumber(line);
     });
     return sum;
 }
 
 
-const parseNumber = (input: string): number => {
+const parseLineNumber = (input: string): number => {
     const matches = input.match(/(\d|one|two|three|four|five|six|seven|eight|nine)/g);
     if (!matches) {
         return 0;
     }
 
-    return 10 * toNumber(matches[0]) + toNumber(matches[matches.length-1]);
+    return 10 * convertToRealNumber(matches[0]) + convertToRealNumber(matches[matches.length-1]);
 }
 
-const toNumber = (input: string): number => {
+const convertToRealNumber = (input: string): number => {
     let map = new Map<string, number>([
         ["one", 1],
         ["two", 2],
