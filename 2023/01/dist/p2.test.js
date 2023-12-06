@@ -24,7 +24,12 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const fs = __importStar(require("fs"));
-const p1_1 = require("./p1");
 const p2_1 = require("./p2");
-console.log('P1: ' + (0, p1_1.p1)(fs.readFileSync('./data/input', 'utf-8')));
-console.log('P2: ' + (0, p2_1.p2)(fs.readFileSync('./data/input', 'utf-8')));
+describe('p2', () => {
+    test('returns 0 for empty input', () => {
+        expect((0, p2_1.p2)('')).toBe(0);
+    });
+    test('returns 281 for test input', () => {
+        expect((0, p2_1.p2)(fs.readFileSync('./data/p2.test', 'utf8'))).toBe(281);
+    });
+});

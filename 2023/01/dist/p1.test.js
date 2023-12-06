@@ -30,6 +30,6 @@ describe('p1', () => {
         expect((0, p1_1.p1)('')).toBe(0);
     });
     test('returns 142 for test input', () => {
-        expect((0, p1_1.p1)(fs.readFileSync('./data/input.test', 'utf8'))).toBe(142);
+        expect((0, p1_1.p1)(fs.readFileSync('./data/p1.test', 'utf8'))).toBe(142);
     });
 });
