@@ -1,3 +1,5 @@
+import { task } from "../../utils/task";
+
 export const p1 = (input: string): number => {
     let sum = 0;
     input.split("\n").forEach( line => {
@@ -8,3 +10,5 @@ export const p1 = (input: string): number => {
     });
     return sum;
 }
+
+task(p1, 1, 1);

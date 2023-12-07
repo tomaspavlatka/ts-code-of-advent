@@ -1,3 +1,5 @@
+import { task } from "../../utils/task";
+
 export const p2 = (input: string): number => {
     let sum = 0;
     input.split("\n").forEach( line => {
@@ -5,7 +7,6 @@ export const p2 = (input: string): number => {
     });
     return sum;
 }
-
 
 const parseLineNumber = (input: string): number => {
     const matches = input.match(/(\d|one|two|three|four|five|six|seven|eight|nine)/g);
@@ -34,3 +35,5 @@ const convertToRealNumber = (input: string): number => {
     return value != undefined ? value : Number(input);
 }
 
+
+task(p2, 1, 2);

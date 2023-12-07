@@ -23,8 +23,14 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.getTestInput = exports.getInput = void 0;
 const fs = __importStar(require("fs"));
-const p1_1 = require("./p1");
-const p2_1 = require("./p2");
-console.log('P1: ' + (0, p1_1.p1)(fs.readFileSync('./data/input', 'utf-8')));
-console.log('P2: ' + (0, p2_1.p2)(fs.readFileSync('./data/input', 'utf-8')));
+const path = __importStar(require("path"));
+const getInput = (day) => {
+    return fs.readFileSync(path.resolve(__dirname, `../inputs/${day}`), "utf-8").trim();
+};
+exports.getInput = getInput;
+const getTestInput = (day, part) => {
+    return fs.readFileSync(path.resolve(__dirname, `../inputs/${day}_${part}.test`), "utf-8").trim();
+};
+exports.getTestInput = getTestInput;

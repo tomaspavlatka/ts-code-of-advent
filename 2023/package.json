@@ -11,6 +11,6 @@
     "scripts": {
         "test": "jest",
         "lint": "eslint . --ext .ts",
-        "run": "node dist/run.js"
+        "start": "npx tsx scripts/run.ts"
     }
 }

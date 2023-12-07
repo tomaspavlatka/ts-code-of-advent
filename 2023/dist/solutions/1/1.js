@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.p1 = void 0;
-const p1 = (input) => {
+exports.handle = void 0;
+const handle = (input) => {
     let sum = 0;
     input.split("\n").forEach(line => {
         const matches = line.match(/\d/g);
@@ -11,4 +11,4 @@ const p1 = (input) => {
     });
     return sum;
 };
-exports.p1 = p1;
+exports.handle = handle;

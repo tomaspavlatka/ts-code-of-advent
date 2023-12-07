@@ -1,5 +1,5 @@
-import * as fs from 'fs';
-import { p1 } from "./p1";
+import { p1 } from './part_1';
+import { getTestInput } from '../../utils/input';
 
 describe('p1', () => {
     test('returns 0 for empty input', () => {
@@ -7,6 +7,6 @@ describe('p1', () => {
     })
 
     test('returns 142 for test input', () => {
-        expect(p1(fs.readFileSync('./data/p1.test', 'utf8'))).toBe(142);
+        expect(p1(getTestInput(1, 1))).toBe(142);
     })
 });
