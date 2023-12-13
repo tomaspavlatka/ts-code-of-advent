@@ -1,10 +1,5 @@
 import { task } from "../../utils/task";
 
-type Point = {
-    x: number,
-    y: number,
-}
-
 export const p2 = (input: string): number => {
     let sum = 0;
 
@@ -27,7 +22,6 @@ export const p2 = (input: string): number => {
 
     return sum;
 }
-
 
 const getNumberAtIndex = (str: string, index: number): number => {
     if (index < 0 || index >= str.length) {
@@ -80,3 +74,5 @@ const findSurroundingNumbers = (index: number, lines: string[]): number[][] => {
 
 const isConsecutive = (number1: number, number2: number): boolean => 
     number2 - number1 === 1
+
+task(p2, 3, 2);
