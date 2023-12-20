@@ -23,7 +23,7 @@ export const p1 = (input: string): number => {
     });
 
     const adjacentNumber: string[] = [];
-    symbols.forEach((symbol, key) => {
+    symbols.forEach((_, key) => {
         let [x, y] = key.split(":").map((value) => parseInt(value));
 
         if (numbers.has(`${x + 1}:${y}`)) { // right 
@@ -62,7 +62,7 @@ export const p1 = (input: string): number => {
 
     let clean = adjacentNumber.filter((value) => {
         let [x, y] = value.split(":").map((value) => parseInt(value));
-        return !adjacentNumber.includes(`${x-1}:${y}`);
+        return adjacentNumber.indexOf(`${x-1}:${y}`) === -1;
     });
 
     let sum = 0;
