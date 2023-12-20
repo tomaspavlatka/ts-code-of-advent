@@ -23,7 +23,7 @@ export const p1 = (input: string): number => {
 
     const adjacentNumbers: string[] = [];
     symbols.forEach((_, key) => {
-        let [x, y] = key.split(":").map((value) => parseInt(value));
+        const [x, y] = key.split(":").map((value) => parseInt(value));
 
         if (numbers.has(`${x + 1}:${y}`)) { // right 
             adjacentNumbers.push(`${x + 1}:${y}`);
@@ -61,7 +61,7 @@ export const p1 = (input: string): number => {
 
     return adjacentNumbers
         .filter((value) => {
-            let [x, y] = value.split(":").map((value) => parseInt(value));
+            const [x, y] = value.split(":").map((value) => parseInt(value));
             return !adjacentNumbers.includes(`${x-1}:${y}`);
         })
         .map((value) => getNumber(value, numbers))
@@ -69,27 +69,21 @@ export const p1 = (input: string): number => {
 }
 
 const getNumber = (point: string, numbers: Map<string, number>): number => {
-    let [x, y] = point.split(":").map((value) => parseInt(value));
+    const [x, y] = point.split(":").map((value) => parseInt(value));
 
-    let idxNotDigit = x; 
-    while (idxNotDigit-- > -1) {
-        if (!numbers.has(`${idxNotDigit}:${y}`)) {
+    let idx = x; 
+    while (idx-- > -1) {
+        if (!numbers.has(`${idx}:${y}`)) {
             break;
         }
     }
 
-    let idx = idxNotDigit + 1;
+    idx++;
 
     let number = "";
-    while (true) {
-        const key = `${idx}:${y}`;
-        if (!numbers.has(key)) {
-            break;
-        }
-
-        number += numbers.get(key);
-        idx++;
-    }
+    do {
+        number += numbers.get(`${idx}:${y}`);
+    } while(numbers.has(`${idx++}:${y}`));
 
     return parseInt(number);
 }
