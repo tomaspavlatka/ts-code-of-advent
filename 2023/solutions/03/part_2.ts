@@ -4,9 +4,7 @@ export const p2 = (input: string): number => {
     const numbers = new Map<string, number>();
     const symbols = new Map<string, string>();
 
-    const lines = input.split("\n");
-
-    lines.forEach((line, index) => {
+    input.split("\n").forEach((line, index) => {
         for (let i = 0; i < line.length; i++) {
             const char = line[i];
             if (char === ".") {
@@ -21,7 +19,7 @@ export const p2 = (input: string): number => {
         }
     });
 
-    const gears: string[][] = [];
+    const adjacentNumbers: string[][] = [];
     symbols.forEach((_, key) => {
         const parts: string[] = [];
         let [x, y] = key.split(":").map((value) => parseInt(value));
@@ -58,20 +56,16 @@ export const p2 = (input: string): number => {
             parts.push(`${x - 1}:${y + 1}`);
         }
 
-        gears.push(parts.filter((value) => {
+        adjacentNumbers.push(parts.filter((value) => {
             let [x, y] = value.split(":").map((value) => parseInt(value));
             return !parts.includes(`${x-1}:${y}`);
         }));
     });
 
-    const valid = gears.filter((gear) => gear.length === 2);
-
-    let sum = 0;
-    valid.forEach((value) => {
-        sum += value.map((point) => getNumber(point, numbers)).reduce((a, b) => a * b, 1);
-    });
-
-    return sum;
+    return adjacentNumbers
+        .filter((gear) => gear.length === 2)
+        .map((value) => value.map((point) => getNumber(point, numbers)).reduce((a, b) => a * b, 1))
+        .reduce((a, b) => a + b, 0)
 }
 
 const getNumber = (point: string, numbers: Map<string, number>): number => {

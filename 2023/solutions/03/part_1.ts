@@ -21,77 +21,77 @@ export const p1 = (input: string): number => {
         }
     });
 
-    const adjacentNumber: string[] = [];
+    const adjacentNumbers: string[] = [];
     symbols.forEach((_, key) => {
         let [x, y] = key.split(":").map((value) => parseInt(value));
 
         if (numbers.has(`${x + 1}:${y}`)) { // right 
-            adjacentNumber.push(`${x + 1}:${y}`);
+            adjacentNumbers.push(`${x + 1}:${y}`);
         }
 
         if (numbers.has(`${x - 1}:${y}`)) { // left 
-            adjacentNumber.push(`${x - 1}:${y}`);
+            adjacentNumbers.push(`${x - 1}:${y}`);
         }
 
         if (numbers.has(`${x + 1}:${y - 1}`)) { // above right 
-            adjacentNumber.push(`${x + 1}:${y - 1}`);
+            adjacentNumbers.push(`${x + 1}:${y - 1}`);
         }
 
         if (numbers.has(`${x}:${y - 1}`)) { // above
-            adjacentNumber.push(`${x}:${y - 1}`);
+            adjacentNumbers.push(`${x}:${y - 1}`);
         }
 
         if (numbers.has(`${x - 1}:${y - 1}`)) { // above left 
-            adjacentNumber.push(`${x - 1}:${y - 1}`);
+            adjacentNumbers.push(`${x - 1}:${y - 1}`);
         }
 
         if (numbers.has(`${x + 1}:${y + 1}`)) { // below right 
-            adjacentNumber.push(`${x + 1}:${y + 1}`);
+            adjacentNumbers.push(`${x + 1}:${y + 1}`);
         }
 
         if (numbers.has(`${x}:${y + 1}`)) { // below
-            adjacentNumber.push(`${x}:${y + 1}`);
+            adjacentNumbers.push(`${x}:${y + 1}`);
         }
 
         if (numbers.has(`${x - 1}:${y + 1}`)) { // below left 
-            adjacentNumber.push(`${x - 1}:${y + 1}`);
+            adjacentNumbers.push(`${x - 1}:${y + 1}`);
         }
 
     });
 
-    let clean = adjacentNumber.filter((value) => {
-        let [x, y] = value.split(":").map((value) => parseInt(value));
-        return adjacentNumber.indexOf(`${x-1}:${y}`) === -1;
-    });
+    return adjacentNumbers
+        .filter((value) => {
+            let [x, y] = value.split(":").map((value) => parseInt(value));
+            return !adjacentNumbers.includes(`${x-1}:${y}`);
+        })
+        .map((value) => getNumber(value, numbers))
+        .reduce((acc, value) => acc + value, 0);
+}
 
-    let sum = 0;
-    clean.forEach((value) => {
-        let [x, y] = value.split(":").map((value) => parseInt(value));
+const getNumber = (point: string, numbers: Map<string, number>): number => {
+    let [x, y] = point.split(":").map((value) => parseInt(value));
 
-        let idxNotDigit = x; 
-        while (idxNotDigit-- > -1) {
-            if (!numbers.has(`${idxNotDigit}:${y}`)) {
-                break;
-            }
+    let idxNotDigit = x; 
+    while (idxNotDigit-- > -1) {
+        if (!numbers.has(`${idxNotDigit}:${y}`)) {
+            break;
+        }
+    }
+
+    let idx = idxNotDigit + 1;
+
+    let number = "";
+    while (true) {
+        const key = `${idx}:${y}`;
+        if (!numbers.has(key)) {
+            break;
         }
 
-        let idx = idxNotDigit + 1;
+        number += numbers.get(key);
+        idx++;
+    }
 
-        let number = "";
-        while (true) {
-            const key = `${idx}:${y}`;
-            if (!numbers.has(key)) {
-                break;
-            }
-
-            number += numbers.get(key);
-            idx++;
-        }
-
-        sum += parseInt(number);
-    });
-
-    return sum;
+    return parseInt(number);
 }
 
 const isDigit = (value: string): boolean => {
