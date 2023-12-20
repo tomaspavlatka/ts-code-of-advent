@@ -1,75 +1,102 @@
+import { convertToObject } from "typescript";
 import { task } from "../../utils/task";
 
 export const p1 = (input: string): number => {
+    const numbers = new Map<string, number>();
+    const symbols = new Map<string, string>();
+
+    const lines = input.split("\n");
+
+    lines.forEach((line, index) => {
+        for (let i = 0; i < line.length; i++) {
+            const char = line[i];
+            if (char === ".") {
+                continue;
+            }
+
+            if (isDigit(char)) {
+                numbers.set(`${i}:${index}`, parseInt(char));
+            } else {
+                symbols.set(`${i}:${index}`, char);
+            }
+        }
+    });
+
+    const adjacentNumber: string[] = [];
+    symbols.forEach((symbol, key) => {
+        let [x, y] = key.split(":").map((value) => parseInt(value));
+
+        if (numbers.has(`${x + 1}:${y}`)) { // right 
+            adjacentNumber.push(`${x + 1}:${y}`);
+        }
+
+        if (numbers.has(`${x - 1}:${y}`)) { // left 
+            adjacentNumber.push(`${x - 1}:${y}`);
+        }
+
+        if (numbers.has(`${x + 1}:${y - 1}`)) { // above right 
+            adjacentNumber.push(`${x + 1}:${y - 1}`);
+        }
+
+        if (numbers.has(`${x}:${y - 1}`)) { // above
+            adjacentNumber.push(`${x}:${y - 1}`);
+        }
+
+        if (numbers.has(`${x - 1}:${y - 1}`)) { // above left 
+            adjacentNumber.push(`${x - 1}:${y - 1}`);
+        }
+
+        if (numbers.has(`${x + 1}:${y + 1}`)) { // below right 
+            adjacentNumber.push(`${x + 1}:${y + 1}`);
+        }
+
+        if (numbers.has(`${x}:${y + 1}`)) { // below
+            adjacentNumber.push(`${x}:${y + 1}`);
+        }
+
+        if (numbers.has(`${x - 1}:${y + 1}`)) { // below left 
+            adjacentNumber.push(`${x - 1}:${y + 1}`);
+        }
+
+    });
+
+    let clean = adjacentNumber.filter((value) => {
+        let [x, y] = value.split(":").map((value) => parseInt(value));
+        return !adjacentNumber.includes(`${x-1}:${y}`);
+    });
 
     let sum = 0;
+    clean.forEach((value) => {
+        let [x, y] = value.split(":").map((value) => parseInt(value));
 
-    const lines = input.trim().split("\n");
-    for (let i = 0; i < lines.length; i++) {
-        [...lines[i].matchAll(/\d+/g)].filter(match => {
-            return hasSymbolNearby(lines, i, (match.index || 0));
-        }).forEach(match => sum += parseInt(match[0]));
-    }
-    
+        let idxNotDigit = x; 
+        while (idxNotDigit-- > -1) {
+            if (!numbers.has(`${idxNotDigit}:${y}`)) {
+                break;
+            }
+        }
+
+        let idx = idxNotDigit + 1;
+
+        let number = "";
+        while (true) {
+            const key = `${idx}:${y}`;
+            if (!numbers.has(key)) {
+                break;
+            }
+
+            number += numbers.get(key);
+            idx++;
+        }
+
+        sum += parseInt(number);
+    });
+
     return sum;
-}
-
-const isSymbol = (char: string): boolean => {
-    return !isDigit(char) && char !== '.';
 }
 
 const isDigit = (value: string): boolean => {
     return value !== undefined && value.match(/^\d$/g) !== null;
-}
-
-const hasSymbolNearby = (lines: string[], lineIndex: number, index: number): boolean => {
-    // Left
-    if (index > 0 && isSymbol(lines[lineIndex][index-1])) {
-        return true;
-    } 
-
-    // Right
-    if (index < lines[lineIndex].length-1) {
-        const right = lines[lineIndex][index+1];
-
-        if (isSymbol(right)) return true;
-
-        if (isDigit(right) && hasSymbolNearby(lines, lineIndex, index+1)) return true;
-    }
-
-    // Above 
-    if (lineIndex > 0) {
-        const above = lines[lineIndex-1][index];
-        if (isSymbol(above)) return true;
-
-        if (index > 0) {
-            const aboveLeft = lines[lineIndex-1][index-1];
-            if (isSymbol(aboveLeft)) return true;
-        }
-
-        if (index < lines[lineIndex].length-1) {
-            const aboveRight = lines[lineIndex-1][index+1];
-            if (isSymbol(aboveRight)) return true;
-        }
-    }
-
-    // Below
-    if (lineIndex < lines.length - 1) {
-        const below = lines[lineIndex+1][index];
-        if (isSymbol(below)) return true;
-
-        if (index > 0) {
-            const belowLeft = lines[lineIndex+1][index-1];
-            if (isSymbol(belowLeft)) return true;
-        }
-
-        if (index < lines[lineIndex].length-1) {
-            const belowRight = lines[lineIndex+1][index+1];
-            if (isSymbol(belowRight)) return true;
-        }
-    }
-
-    return false;
 }
 
 task(p1, 3, 1);
